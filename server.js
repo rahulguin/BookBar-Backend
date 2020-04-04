@@ -40,6 +40,7 @@ const apiRouter = express.Router();
 app.use('/api', apiRouter);
 apiRouter.use('/users', userRoutes);
 apiRouter.use('/session', sessionRoutes);
+apiRouter.use('/book', bookRoutes);
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 } catch (err) {
