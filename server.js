@@ -4,6 +4,7 @@ import session from "express-session";
 import connectStore from "connect-mongo";
 import { userRoutes } from './routes/index';
 import sessionRoutes from './routes/session';
+import bookRouter from "./routes/book";
 import { PORT, NODE_ENV , MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME} from './config';
 
 
@@ -40,7 +41,7 @@ const apiRouter = express.Router();
 app.use('/api', apiRouter);
 apiRouter.use('/users', userRoutes);
 apiRouter.use('/session', sessionRoutes);
-apiRouter.use('/book', bookRoutes);
+apiRouter.use('/book', bookRouter);
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 } catch (err) {

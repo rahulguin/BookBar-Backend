@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {image} from '/models/image.schema';
+import {image} from './image.schema';
 import {price} from "./price.schema";
 
 export const BookSchema = new mongoose.Schema({
@@ -46,6 +46,6 @@ export const BookSchema = new mongoose.Schema({
     }
 )
 
-const Book = mongoose.model('book', BookSchema)
-export default Book
+module.exports = mongoose.model('book', BookSchema)
+// export default Book
 
