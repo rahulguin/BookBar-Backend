@@ -35,8 +35,8 @@ export const BookSchema = new mongoose.Schema({
         averageRating: Number,
         ratingsCount: Number,
         image: image,
+        language: String,
         price: price,
-
         seller: String,
 
     }, {
