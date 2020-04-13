@@ -41,45 +41,14 @@ if(res.data.hasOwnProperty("items")){
            count = count+1;
         try{
              structuredData = {
-                title: element.volumeInfo.title,
-                authors: element.volumeInfo.authors? element.volumeInfo.authors: [],
-                publisher : element.volumeInfo.publisher? element.volumeInfo.publisher: "Anonymous",
-                description: element.volumeInfo.description? element.volumeInfo.description: "Read Book to find Out!!!",
-                isbn:element.volumeInfo.industryIdentifiers,
-                pageCount: element.volumeInfo.pageCount,
-                category:element.volumeInfo.categories,
-                averageRating: element.volumeInfo.averageRating?element.volumeInfo.averageRating:4.0,
-                ratingsCount: element.volumeInfo.ratingsCount?element.volumeInfo.ratingsCount: 50,
-                image : {},
-                language: element.volumeInfo.language,
-                price : {},
+                isbn:element.volumeInfo.industryIdentifiers[0].indentifier,
+                quantity: 100,
+                price : {
+                    amount: 30,
+                    currency: "USD"
+                },
                 seller: seller
             };
-
-            if(element.volumeInfo.hasOwnProperty("imageLinks")){
-            if(element.volumeInfo.imageLinks.hasOwnProperty("smallThumbnail")){
-                structuredData.image.smallThumbnail = element.volumeInfo.imageLinks.smallThumbnail;
-            }else{
-                structuredData.image.smallThumbnail = "";
-            }
-
-            if(element.volumeInfo.imageLinks.hasOwnProperty("thumbnail")){
-                structuredData.image.thumbnail = element.volumeInfo.imageLinks.thumbnail;
-            }else{
-                structuredData.image.thumbnail = "";
-            }
-        }else{
-            structuredData.image.smallThumbnail = "";
-            structuredData.image.Thumbnail = "";
-        }
-
-            if(element.saleInfo.sleability == "FOR_SALE"){
-                structuredData.price.amount = element.saleInfo.listPrice.amount;
-                structuredData.price.currency = element.saleInfo.listPrice.currencyCode;
-            }else{
-                structuredData.price.amount = "10.00";
-                structuredData.price.currency = "USD"
-            }
     
             // console.log("Structured data:::::", structuredData);
          await axios.post(url+"book/Addbook",structuredData);
