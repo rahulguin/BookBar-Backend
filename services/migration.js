@@ -24,24 +24,22 @@ try{
 
 searchCriteria.forEach(async(ele,index) => {
     let seller = "Batman";
-    if(index<6){
+    if(index>10&&index<20){
         seller = "Superman";
     }
-    if(index>=6 && index<12){
+    if(index>=20){
         seller = "Thor";
     }
 
-    let res = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${ele}`);
+    let res = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${ele}&maxResults=40`);
 
     // console.log(Object.keys(res.data.items).length);
     // console.log(res.data.items);
 if(res.data.hasOwnProperty("items")){
-    res.data.items.forEach(async(element)=>{
-
-           count = count+1;
+    res.data.items.forEach(async(element)=>{   
         try{
              structuredData = {
-                isbn:element.volumeInfo.industryIdentifiers[0].indentifier,
+                isbn:"",
                 quantity: 100,
                 price : {
                     amount: 30,
@@ -49,22 +47,23 @@ if(res.data.hasOwnProperty("items")){
                 },
                 seller: seller
             };
-    
-            // console.log("Structured data:::::", structuredData);
-         await axios.post(url+"book/Addbook",structuredData);
+
+            let info = element.volumeInfo;
+            if(info.hasOwnProperty('industryIdentifiers')){
+                structuredData['isbn'] = element.volumeInfo.industryIdentifiers[0];
+                // console.log("Structured data:::::", structuredData);
+                await axios.post(url+"book/Addbook",structuredData);
+            }
 
         } catch(e){
-            // console.log(e);
+             console.log(e);
         }      
            
     });
 
-}
-console.log("countOfItems",count);
-
-    
+}  
 });
-
+console.log("countOfItems",count);
 
 }
 
