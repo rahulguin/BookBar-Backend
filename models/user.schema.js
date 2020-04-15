@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { compareSync, hashSync } from 'bcryptjs';
+import {address} from "./address.schema"
 
 let userTypes = ["SELLER", "BUYER"]
 const UserSchema = new mongoose.Schema({
@@ -25,7 +26,11 @@ const UserSchema = new mongoose.Schema({
       type: String,
       enum:userTypes,
       required:true
-  }
+  },
+  address:{
+    type: address
+  } 
+
 }, { timestamps: true });
 
 UserSchema.pre('save', function () {

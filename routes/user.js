@@ -8,10 +8,10 @@ const userRoutes = express.Router();
 
 userRoutes.post("", async (req, res) => {
     try {
-        const {username, email, password, userType} = req.body
+        const {username, email, password, userType, address} = req.body
         await Joi.validate({username, email, password}, signUp);
 
-        const newUser = new User({username, email, password, userType});
+        const newUser = new User({username, email, password, userType, address});
         const sessionUser = sessionizeUser(newUser);
         await newUser.save();
         req.session.user = sessionUser;

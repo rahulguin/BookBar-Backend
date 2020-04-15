@@ -1,17 +1,19 @@
 import mongoose from 'mongoose';
-import {image} from './image.schema';
 import {price} from "./price.schema";
+import {isbn} from "./isbn.schema";
+
 
 export const BookSchema = new mongoose.Schema({
-        isbn: {
-            type: Array,
-            default: [],
+        isbn:isbn,
+        quantity:{
+            type:Number,
             required: true
         },
-        quantity: Number,
         price: price,
-        seller: String,
-
+        seller: {
+            type: String,
+            required: true,
+        }
     }, {
         timestamps: true
     }, {

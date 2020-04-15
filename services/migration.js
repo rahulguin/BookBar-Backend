@@ -18,6 +18,7 @@ let criteria_count = 0;
 try{
     await createSellers();
 } catch(e){
+    console.log(e);
     return;
 }
 
@@ -37,6 +38,8 @@ searchCriteria.forEach(async(ele,index) => {
     // console.log(res.data.items);
 if(res.data.hasOwnProperty("items")){
     res.data.items.forEach(async(element)=>{   
+        count++;
+
         try{
              structuredData = {
                 isbn:"",
@@ -67,26 +70,46 @@ console.log("countOfItems",count);
 
 }
 
-const createSellers = async()=>{  
+
+
+
+
+
+
+const createSellers = async()=>{ 
+    
+    const address = {
+        "street" : "235 park drive #33",
+        "pincode": 02215,
+        "city": "Boston",
+        "state": "MA",
+        "country": "USA"
+    }
+
+
+
     await axios.post(url+"users", {
             "username": "Batman",
             "email": "batman@gmail.com",
             "password": "Password123!",
-            "userType": "SELLER"
+            "userType": "SELLER",
+            "address":address
         });
 
     await axios.post(url+"users", {
             "username": "Superman",
             "email": "superman@gmail.com",
             "password": "Password123!",
-            "userType": "SELLER"
+            "userType": "SELLER",
+            "address": address
         });    
     
      await axios.post(url+"users", {
             "username": "Thor",
             "email": "thor@gmail.com",
             "password": "Password123!",
-            "userType": "SELLER"
+            "userType": "SELLER",
+            "address": address
         });    
 
 }
