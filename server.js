@@ -9,7 +9,7 @@ import {MONGO_URI, NODE_ENV, PORT, SESS_LIFETIME, SESS_NAME, SESS_SECRET} from '
 
 (async () => {
     try {
-        await mongoose.connect(MONGO_URI, {useNewUrlParser: true});
+        await mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
         console.log('Connection to MongoDB Established!!');
 
         const app = express();
@@ -17,8 +17,14 @@ import {MONGO_URI, NODE_ENV, PORT, SESS_LIFETIME, SESS_NAME, SESS_SECRET} from '
 
         app.disable('x-powered-by');
         app.use(function (req, res, next) {
-            res.header("Access-Control-Allow-Origin",
-                       "http://localhost:3000");
+            let whitelist = [
+                'http://localhost:3000',
+                'http://localhost:3001'
+            ];
+            let origin = req.headers.origin;
+            if (whitelist.indexOf(origin) > -1) {
+                res.setHeader('Access-Control-Allow-Origin', origin);
+            }
             res.header("Access-Control-Allow-Headers",
                        "Origin, X-Requested-With, Content-Type, Accept");
             res.header("Access-Control-Allow-Methods",
@@ -51,7 +57,7 @@ import {MONGO_URI, NODE_ENV, PORT, SESS_LIFETIME, SESS_NAME, SESS_SECRET} from '
         apiRouter.use('/session', sessionRoutes);
         apiRouter.use('/book', bookRouter);
 
-        app.listen(process.env.PORT||PORT, () => console.log(`Listening on port ${PORT}`));
+        app.listen(process.env.PORT || PORT, () => console.log(`Listening on port ${PORT}`));
     } catch (err) {
         console.log(err)
     }
