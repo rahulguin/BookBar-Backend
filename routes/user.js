@@ -21,4 +21,48 @@ userRoutes.post("", async (req, res) => {
     }
 });
 
+userRoutes.post("/updateProfile", ({session, body}, res) => {
+    const userId = session.user.userId;
+    const update = {}
+    const updateAddress = {}
+    if (body.firstName) {
+        update.firstName = body.firstName
+    }
+    if (body.lastName) {
+        update.lastName = body.lastName
+    }
+    if (body.password) {
+        update.password = body.password
+    }
+    if (body.email) {
+        update.email = body.email
+    }
+    const receivedAddress = body.address
+    if (receivedAddress.street) {
+        updateAddress.street = receivedAddress.street
+    }
+    if (receivedAddress.city) {
+        updateAddress.city = receivedAddress.city
+    }
+    if (receivedAddress.state) {
+        updateAddress.state = receivedAddress.state
+    }
+    if (receivedAddress.country) {
+        updateAddress.country = receivedAddress.country
+    }
+    if (receivedAddress.pincode) {
+        updateAddress.pincode = receivedAddress.pincode
+    }
+    if (updateAddress) {
+        update.address = updateAddress
+    }
+
+    const query = {_id: userId};
+    User.findOneAndUpdate(query, update, {upsert: true}, (err, doc) => {
+        if (err) {
+            return res.send(500, {error: err});
+        }
+        return res.send('Succesfully saved.');
+    })
+})
 export default userRoutes;
