@@ -29,8 +29,9 @@ const UserSchema = new mongoose.Schema({
   },
   address:{
     type: address
-  } 
-
+  },
+  firstName: String,
+  lastName: String
 }, { timestamps: true });
 
 UserSchema.pre('save', function () {
