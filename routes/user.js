@@ -65,4 +65,15 @@ userRoutes.post("/updateProfile", ({session, body}, res) => {
         return res.send('Succesfully saved.');
     })
 })
+
+userRoutes.get("", ({session}, res) => {
+    const userId = session.user.userId;
+    const projection = ' -_id firstName lastName password email address'
+    User.findById(userId, projection, (err, user) => {
+        if (err) {
+            return res.status(500).send({error: err})
+        }
+        return res.send(user)
+    })
+})
 export default userRoutes;
