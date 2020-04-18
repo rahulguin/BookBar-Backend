@@ -2,10 +2,11 @@ import express from 'express';
 import mongoose from 'mongoose';
 import session from "express-session";
 import connectStore from "connect-mongo";
-import {userRoutes} from './routes/index';
+import {userRoutes, cartRoutes, wishRoutes} from './routes/index';
 import sessionRoutes from './routes/session';
 import bookRouter from "./routes/book";
 import {MONGO_URI, NODE_ENV, PORT, SESS_LIFETIME, SESS_NAME, SESS_SECRET} from './config';
+
 
 (async () => {
     try {
@@ -56,6 +57,8 @@ import {MONGO_URI, NODE_ENV, PORT, SESS_LIFETIME, SESS_NAME, SESS_SECRET} from '
         apiRouter.use('/users', userRoutes);
         apiRouter.use('/session', sessionRoutes);
         apiRouter.use('/book', bookRouter);
+        apiRouter.use('/cart', cartRoutes);
+        apiRouter.use('/wish', wishRoutes);
 
         app.listen(process.env.PORT || PORT, () => console.log(`Listening on port ${PORT}`));
     } catch (err) {
