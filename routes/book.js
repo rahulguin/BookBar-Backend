@@ -43,7 +43,14 @@ bookRouter.route('/getBookById/:bid').get((req, res) => {
 //         .catch(err=>res.status(400).json('Error: '+err));
 // })
 
-
+//search  book by isbn
+ bookRouter.route('/getBookByIsbn/:isbn').get((req,res) =>{
+     const isbn = req.params['isbn'];
+     book.find({"isbn":{"$exists": true},
+                "isbn.identifier":isbn})
+            .then(book => res.json(book))
+            .catch(err => res.status(400).json('Err: '+err))   
+ })
 
 
 export default bookRouter;
