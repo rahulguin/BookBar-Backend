@@ -19,7 +19,8 @@ import {MONGO_URI, NODE_ENV, PORT, SESS_LIFETIME, SESS_NAME, SESS_SECRET} from '
         app.use(function (req, res, next) {
             let whitelist = [
                 'http://localhost:3000',
-                'http://localhost:3001'
+                'http://localhost:3001',
+                'https://webdev-project-team17.herokuapp.com'
             ];
             let origin = req.headers.origin;
             if (whitelist.indexOf(origin) > -1) {
