@@ -27,7 +27,7 @@ cartRouter.route('/delete/:user').delete((req,res)=>{
 cartRouter.route('/getCartItems/:user').get((req, res) => {
     const user = req.params['user'];
     cart.findOne({buyer: user})
-        .then(book => res.json(book.items))
+        .then(book => res.json(book))
         .catch(err => res.status(400).json('Err: '+err))
 })
 
