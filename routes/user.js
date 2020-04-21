@@ -21,8 +21,12 @@ userRoutes.post("", async (req, res) => {
     }
 });
 
-userRoutes.post("/updateProfile", ({session, body}, res) => {
-    const userId = session.user.userId;
+userRoutes.post("/updateProfile/:userId", (req, res) => {
+    console.log("in update profile api")
+    const userId = req.params['userId'];
+    const body = req.body;
+    console.log('userId: '+userId)
+    console.log('body: '+body)
     const update = {}
     const updateAddress = {}
     if (body.firstName) {
@@ -66,13 +70,16 @@ userRoutes.post("/updateProfile", ({session, body}, res) => {
     })
 })
 
-userRoutes.get("", ({session}, res) => {
-    const userId = session.user.userId;
+userRoutes.get("/:userId", (req, res) => {
+    const userId = req.params['userId'];
+    console.log('userId in getProfile')
+    console.log(userId)
     const projection = ' -_id firstName lastName password email address userType'
     User.findById(userId, projection, (err, user) => {
         if (err) {
             return res.status(500).send({error: err})
         }
+        console.log(user)
         return res.send(user)
     })
 })
