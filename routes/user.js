@@ -68,7 +68,7 @@ userRoutes.post("/updateProfile", ({session, body}, res) => {
 
 userRoutes.get("", ({session}, res) => {
     const userId = session.user.userId;
-    const projection = ' -_id firstName lastName password email address'
+    const projection = ' -_id firstName lastName password email address userType'
     User.findById(userId, projection, (err, user) => {
         if (err) {
             return res.status(500).send({error: err})
